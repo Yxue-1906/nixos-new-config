@@ -8,13 +8,13 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usbhid" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/8ab04631-a072-4cb8-8790-17e297f76858";
+fileSystems."/" =
+    { device = "/dev/disk/by-uuid/c76cd519-b170-46fb-9bde-1a0734afd0bf";
       fsType = "ext4";
     };
 
@@ -38,19 +38,24 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
 
   hardware.nvidia = {
-    modesetting.enable = true;
+    # modesetting.enable = true;
     powerManagement = {
-      enable = false;
+      enable = true;
       finegrained = true;
     };
     prime = {
-      reverseSync.enable = true;
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
+      offload = {
+        enable = true;
+	enableOffloadCmd = true;
+      };
+      # reverseSync.enable = true;
+      intelBusId = "PCI:0@0:2:0";
+      nvidiaBusId = "PCI:1@0:0:0";
     };
-    open = true;
+    open = false;
+    # package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 }
