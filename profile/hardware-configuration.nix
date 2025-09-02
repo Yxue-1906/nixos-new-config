@@ -41,9 +41,9 @@ fileSystems."/" =
   services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
 
   hardware.nvidia = {
-    # modesetting.enable = true;
+    modesetting.enable = false;
     powerManagement = {
-      enable = true;
+      enable = false;
       finegrained = true;
     };
     prime = {
@@ -56,6 +56,5 @@ fileSystems."/" =
       nvidiaBusId = "PCI:1@0:0:0";
     };
     open = false;
-    # package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 }

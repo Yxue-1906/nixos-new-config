@@ -1,9 +1,9 @@
-{ config, lib, pkgs, secrets, ...}: {
+{ pkgs, secrets, ...}: {
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.unrelated = {
     isNormalUser = true;
-    password = secrets.password.laptop;
-    extraGroups = [ "aria2" "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    password = secrets.password;
+    extraGroups = [ "wheel" "networkmanager" "kvm" ]; # Enable ‘sudo’ for the user.
   };
 }
