@@ -1,0 +1,24 @@
+set -e
+
+cd "$(git rev-parse --show-toplevel)"
+
+# pull remote changes
+git pull 
+
+# update lock
+nix flake update
+
+# check config can be built
+nixos-rebuild build && rm result
+
+# check use remote flake instead of local test flake
+if ! nix flake metadata | grep github:Yxue-1906/nixos-common-config; then
+  echo -e "\033[0;31m================================================================\033[0m"
+  echo 
+  echo -e '\033[0;31mPlease check common input url before commit!\033[0m'
+  echo 
+  echo -e "\033[0;31m================================================================\033[0m"
+  exit 1
+fi
+
+git add flake.lock
