@@ -37,8 +37,11 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  # see: https://download.nvidia.com/XFree86/Linux-x86_64/575.64/README/powermanagement.html#PreserveAllVide719f0
+  boot.kernelParams = [ "nvidia.NVreg_TemporaryFilePath=/nvidia-ram" ];
   hardware.nvidia = {
-    modesetting.enable = false;
+    modesetting.enable = true;
+    powerManagement.enable = true;
     open = false;
     # package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
