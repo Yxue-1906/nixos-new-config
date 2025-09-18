@@ -21,4 +21,4 @@ if ! nix flake metadata | grep github:Yxue-1906/nixos-common-config; then
   exit 1
 fi
 
-git add flake.lock
+git add flake.nix && git add flake.lock
