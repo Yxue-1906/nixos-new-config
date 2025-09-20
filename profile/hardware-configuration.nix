@@ -41,7 +41,7 @@ fileSystems."/" =
   services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
 
   hardware.nvidia = {
-    modesetting.enable = false;
+    modesetting.enable = true;
     powerManagement = {
       enable = false;
       finegrained = true;
