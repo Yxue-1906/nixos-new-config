@@ -2,20 +2,38 @@
   "nodes": {
     "common": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
+        "nixos-shared-flakes": "nixos-shared-flakes",
         "nixpkgs-sing-box": "nixpkgs-sing-box"
       },
       "locked": {
-        "lastModified": 1758040428,
-        "narHash": "sha256-CMQL+vcf5aiRjIydabYxA1GfhrIV3iJKioc63xTVGq0=",
+        "lastModified": 1758213876,
+        "narHash": "sha256-GcU5bq0DPnWYpkCU+v4KXm3lL3xxj/CvlWSPBK/llXo=",
         "owner": "Yxue-1906",
         "repo": "nixos-common-config",
-        "rev": "a4cb76c2a3d2e405f4ff9d8bac23ac429bb60b2a",
+        "rev": "65dbb9b7d700b63692e028cafe68e152ded04fee",
         "type": "github"
       },
       "original": {
         "owner": "Yxue-1906",
         "repo": "nixos-common-config",
+        "type": "github"
+      }
+    },
+    "nixos-shared-flakes": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1758212585,
+        "narHash": "sha256-6vZTUfhy69Mnj2CpdN/jjSzTt4VDvIGfbhNxi/CgRUo=",
+        "owner": "Yxue-1906",
+        "repo": "nixos-shared-flake",
+        "rev": "190941b0bafb0945a364213bbaf75479e45f833e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Yxue-1906",
+        "repo": "nixos-shared-flake",
         "type": "github"
       }
     },
@@ -30,8 +48,8 @@
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "rev": "c23193b943c6c689d70ee98ce3128239ed9e32d1",
         "type": "github"
       }
     },
