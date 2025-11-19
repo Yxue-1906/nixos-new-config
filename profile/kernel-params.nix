@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   # Try to fix keyboard no response issue when press any key after select boot entry before the probing
   # see: https://lore.kernel.org/lkml/20211112180022.10850-1-tiwai@suse.de/T/
   # see: https://wiki.archlinux.org/title/Kernel_parameters
@@ -6,4 +6,7 @@
   boot.kernelParams = [
     "i8082.probe_defer"
   ];
+
+  # pin to stabler LTS kernel
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
 }
