@@ -3,27 +3,13 @@
   inputs = {
     common.url = "github:Yxue-1906/nixos-common-config";
     # common.url = "git+file:///etc/nixos-common-config/";
+    android-studio-nixpkgs.url = "github:NixOS/nixpkgs/6ff44e6ab44230e2f140c79595f42f22018da684";
   };
-  outputs = { self, common, ... }@inputs: common.build-host { 
+  outputs = { self, common, android-studio-nixpkgs, ... }@inputs: common.build-host { 
     profile = import ./profile;
     secrets = import ./secrets;
+    extra-args = {
+      inherit android-studio-nixpkgs;
+    };
   };
-  # outputs = { self, common, ... }@inputs: with nixpkgs.lib; {
-  #   nixosConfigurations."unrelated" = nixosSystem rec {
-  #     # now set system manually is work around, find if can use nixpkgs.hostPlatform
-  #     system = "x86_64-linux";
-  #     specialArgs = {
-  #       inherit self;
-  #       secrets = import ./secrets/secrets.nix;
-  #     };
-  #     modules = [
-  #       ./networking
-  #       ./applications
-  #       ./filesystem
-  #       ./profile
-  #       ./basic-config
-  #       ./security
-  #     ];
-  #   };
-  # };
 }

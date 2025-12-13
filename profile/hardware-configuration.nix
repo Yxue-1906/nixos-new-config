@@ -55,6 +55,10 @@ fileSystems."/" =
       finegrained = true;
     };
     prime = {
+      reverseSync = {
+        enable = true;
+	setupCommands.enable = true;
+      };
       offload = {
         enable = true;
 	enableOffloadCmd = true;

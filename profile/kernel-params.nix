@@ -6,7 +6,4 @@
   boot.kernelParams = [
     "i8082.probe_defer"
   ];
-
-  # pin to stabler LTS kernel
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
 }
