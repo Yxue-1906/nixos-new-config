@@ -5,6 +5,6 @@
   users.users.unrelated = {
     isNormalUser = true;
     password = secrets.password;
-    extraGroups = [ "aria2" "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
   };
 }

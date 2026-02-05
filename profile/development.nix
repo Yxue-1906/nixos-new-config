@@ -5,5 +5,10 @@
     clion
     webstorm
     pycharm-professional
+    idea-community
+
+    wireshark
   ];
+  
+  programs.command-not-found.enable = true;
 }
