@@ -39,10 +39,14 @@
 
   # see: https://download.nvidia.com/XFree86/Linux-x86_64/575.64/README/powermanagement.html#PreserveAllVide719f0
   # boot.kernelParams = [ "nvidia.NVreg_TemporaryFilePath=/nvidia-ram" ];
+  systemd.services.systemd-suspend.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+  systemd.services.systemd-hibernate.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+  systemd.services.systemd-hybrid-sleep.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+  systemd.services.systemd-suspend-then-hibernate.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+  
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
     open = false;
-    # package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 }
