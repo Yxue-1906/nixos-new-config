@@ -8,9 +8,5 @@
   # ];
   environment.systemPackages = with pkgs; with jetbrains; [
     clion
-    webstorm
-    pycharm-professional
-    idea-community
-    rust-rover
   ];
 }

@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.kernelParams = [ "nvidia.NVreg_TemporaryFilePath=/var/tmp" ];
+  boot.kernelParams = [ ];
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usbhid" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -41,6 +41,9 @@ fileSystems."/" =
 
   services.xserver.videoDrivers = [ "nvidia" ];
   systemd.services.systemd-suspend.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+  systemd.services.systemd-hibernate.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+  systemd.services.systemd-hybrid-sleep.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+  systemd.services.systemd-suspend-then-hibernate.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
 
   hardware.nvidia = {
     # package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
@@ -63,7 +66,7 @@ fileSystems."/" =
       # };
       offload = {
         enable = true;
-	enableOffloadCmd = true;
+	      enableOffloadCmd = true;
       };
       # reverseSync.enable = true;
       intelBusId = "PCI:0@0:2:0";

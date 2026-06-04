@@ -2,23 +2,52 @@ set -e
 
 cd "$(git rev-parse --show-toplevel)"
 
-# pull remote changes
-git pull 
+git fetch --quiet
+
+# Compare local HEAD against the upstream tracking branch:
+#   - HEAD behind upstream  → refuse: user must pull remote changes first
+#   - HEAD == upstream      → proceed (staged changes need validation)
+#   - HEAD ahead of upstream → proceed (unpushed local work needs validation)
+if git rev-parse '@{u}' >/dev/null 2>&1; then
+    if [ "$(git rev-parse HEAD)" != "$(git rev-parse '@{u}')" ] && \
+       git merge-base --is-ancestor HEAD '@{u}'; then
+        echo "[pre-commit] local HEAD is behind upstream — pull remote changes before committing"
+        exit 1
+    fi
+fi
+
+# Build up --override-input arguments.
+# Primary override: replace the flake input that normally points to this
+# repo with the actual local checkout so the build uses the current source.
+OVERRIDE_ARGS=()
+
+# EXTRA_NIX_OVERRIDES allows additional flake input replacements at runtime.
+# Format: semicolon-separated "input=path" pairs.
+# Example: EXTRA_NIX_OVERRIDES="nixpkgs=/path/to/nixpkgs;utils=/path/to/utils"
+if [ -n "${EXTRA_NIX_OVERRIDES:-}" ]; then
+    IFS=';' read -ra pairs <<< "$EXTRA_NIX_OVERRIDES"
+    for pair in "${pairs[@]}"; do
+        # Split on the FIRST '=' only — flake references/paths may contain
+        # '=' in query parameters (e.g. ?rev=abc123, ?dir=subdir).
+        if [[ "$pair" =~ ^([^=]+)=(.*)$ ]]; then
+            input="${BASH_REMATCH[1]}"
+            path="${BASH_REMATCH[2]}"
+            if [ -n "$input" ] && [ -n "$path" ]; then
+                echo "[pre-commit] extra override: '$input' → $path"
+                OVERRIDE_ARGS+=(--override-input "$input" "$path")
+            fi
+        fi
+    done
+fi
 
 # update lock
 nix flake update
 
-# check config can be built
-nixos-rebuild build && rm result
+WORK_DIR="$(mktemp -d)"
+trap 'rm -rf "$WORK_DIR"' EXIT
 
-# check use remote flake instead of local test flake
-if ! nix flake metadata | grep github:Yxue-1906/nixos-common-config; then
-  echo -e "\033[0;31m================================================================\033[0m"
-  echo 
-  echo -e '\033[0;31mPlease check common input url before commit!\033[0m'
-  echo 
-  echo -e "\033[0;31m================================================================\033[0m"
-  exit 1
-fi
+echo "eval config inside $WORK_DIR"
+# check config can be built
+pushd "$WORK_DIR" && nixos-rebuild build "${OVERRIDE_ARGS[@]}" && popd
 
 git add flake.lock
