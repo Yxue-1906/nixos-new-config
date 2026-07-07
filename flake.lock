@@ -8,11 +8,11 @@
         "nixpkgs-sing-box": "nixpkgs-sing-box"
       },
       "locked": {
-        "lastModified": 1780733541,
-        "narHash": "sha256-pKMaF7slq8m79xLJb0PqcR4FPOgHM3293aYlSDoZb/M=",
+        "lastModified": 1783419000,
+        "narHash": "sha256-VeHBfu54TD+7dC3B3wc3w5QKkYfqog36K+xcQ1OUTS4=",
         "owner": "Yxue-1906",
         "repo": "nixos-common-config",
-        "rev": "9cf551396fd6e36bc3a843d37603050a464fd29d",
+        "rev": "5dccc62d5cb2445dddff50dbcd34b4485d6a530a",
         "type": "github"
       },
       "original": {

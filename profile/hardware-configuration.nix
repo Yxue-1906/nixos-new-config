@@ -66,7 +66,7 @@ fileSystems."/" =
       # };
       offload = {
         enable = true;
-	      enableOffloadCmd = true;
+        enableOffloadCmd = true;
       };
       # reverseSync.enable = true;
       intelBusId = "PCI:0@0:2:0";
